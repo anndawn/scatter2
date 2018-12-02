@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Scatterplot</title>
+</head>
+<style media="screen">
+*{margin:0;padding:0;}
+#echarts{width: 100%;height: 100%;position: absolute;}
+</style>
+<body>
+   <div id="echarts">
+
+   </div>
+</body>
+</html>
+<script type="text/javascript" src="echarts.min.js"></script>
+<script type="text/javascript" src='jquery-3.2.1.min.js'></script>
+<script>
+  var mycharts=echarts.init($('#echarts').get(0));
+  var option;
+  var data = [
+    [923,0.475102,'上海市'],[195,0.539907,'重庆市'],[181,0.589453,'浙江省'],[14,0.36361,'青海省'],[11133,0.427503,'广东省'],[44,0.557991,'安徽省'],[0,0.525557,'河北省'],[159,0.590904,'山东省'],
+    [104,0.471592,'辽宁省'],[0,0.515731,'贵州省'],[245,0.585906,'湖南省'],[189,0.560751,'新疆维吾尔自治区'],[109,0.470713,'甘肃省'],
+    [2708,0.545577,'北京市'],[73,0.490382,'宁夏回族自治区'],[115,0.607758,'云南省'],
+    [984,0.581357,'四川省'],[54,0.453345,'陕西省'],[5514,0.55657,'江苏省'],
+    [47,0.528356,'湖北省'],[633,0.597938,'江西省'],[5,0.561613,'河南省'],
+    [0,0.526869,'西藏自治区'],[74,0.561028,'黑龙江省'],[0,0.368807,'内蒙古自治区'],
+    [52,0.613543,'海南省'],[69,0.589323,'广西壮族自治区'],[0,0.580194,'吉林省'],
+    [31,0.439711,'天津市'],[79,0.535124,'福建省'],[62,0.588918,'山西省'],[3,0.560751,'新疆自治区']];
+  console.dir(data);
+option = {
+    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+        offset: 0,
+        color: '#f7f8fa'
+    }, {
+        offset: 1,
+        color: '#cdd0d5'
+    }]),
+    title: {
+        text: '1990 与 2015 年各国家人均寿命与 GDP'
+    },
+    // legend: {
+    //     right: 10,
+    //     data: ['1990', '2015']
+    // },
+    xAxis: {
+        splitLine: {
+            lineStyle: {
+                type: 'dashed'
+            }
+        }
+    },
+    yAxis: {
+        splitLine: {
+            lineStyle: {
+                type: 'dashed'
+            }
+        },
+        scale: true
+    },
+    series: [{
+        name: '1990',
+        data: data,
+        type: 'scatter',
+        symbolSize:function (data) {
+          if (data[0]<200) {
+            return 12;
+          }else if (data[0]<=500) {
+            return 36;
+          }else if (data[0]>500) {
+            return 48;
+          }},
+        label: {
+            emphasis: {
+                show: true,
+                formatter: function (param) {
+                    return param.data[2]+"\n的投诉量为"+param.data[0];
+                },
+                position: 'top'
+            }
+        },
+        itemStyle: {
+            normal: {
+                shadowBlur: 10,
+                shadowColor: 'rgba(120, 36, 50, 0.5)',
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                    offset: 0,
+                    color: 'rgb(251, 118, 123)'
+                }, {
+                    offset: 1,
+                    color: 'rgb(204, 46, 72)'
+                }])
+            }
+        }
+    }]};
+  mycharts.setOption(option);
+</script>
